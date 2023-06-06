@@ -45,17 +45,18 @@ for t in range(1, days):
 # Convert price_paths numpy array to pandas DataFrame
 price_paths_df = pd.DataFrame(price_paths)
 
-# Plot the price paths with transparency
-fig = go.Figure()
-
-# Add all price paths as traces with a specified transparency
-for i in range(price_paths_df.shape[1]):
-    fig.add_trace(go.Scatter(y=price_paths_df[i], mode='lines', line=dict(color='rgba(0,0,255,0.3)')))
 
 # Compute the mean of each row (each trading day) and add it to the plot
-mean_line = go.Scatter(y=price_paths_df.mean(axis=1), mode='lines', name='Mean', line=dict(color='ORANGE'))
-fig.add_trace(mean_line)
+sns.distplot(price_paths_df.iloc[-1], kde=True, hist=True)
 
-fig.update_layout(xaxis_title='Trading Days', yaxis_title='Price', yaxis_tickprefix='$', title='Monte Carlo Simulation for ' + ticker)
+# Set the x-axis label to 'Price'
+plt.xlabel('Price')
 
-fig.show()
+# Set the y-axis label to 'Frequency'
+plt.ylabel('Frequency')
+
+# Set the title of the plot to 'Price Distribution'
+plt.title('Price Distribution of ' + ticker + ' Stock' + '| For 1,000 sims with 5 Yrs of Historical Data with 252 Trading Days/Year')
+
+# Show the plot
+plt.show()
